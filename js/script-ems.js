@@ -2,6 +2,8 @@
 let emp
 let storage
 let list
+
+
 let employees = [
     {'id': 12345678,'fullName': 'Hamish McCauley', 'extension':4567, 'email': 'hmccauley@gmail.com', 'department':'Quality Assurance'},
     {'id':45678945, 'fullName':'Steve McCauley','extension': 7894, 'email':'smccauley@verimatrix.com','department': 'Marketing'},
@@ -35,6 +37,7 @@ const $ = (id) => {
 }
 
 // BUILD THE EMPLOYEES TABLE WHEN THE PAGE LOADS
+
 employees.forEach(emp => {
     let row = document.createElement('tr')
     Object.values(emp).forEach(text => {
@@ -71,8 +74,20 @@ addForm.addEventListener('submit', (e) => {
    
     
     // BUILD THE GRID
-    
+
+    function clearTable() {
+        const old_tbody = document.getElementById('tableBody')
+        const new_tbody = document.createElement('tbody')
+        old_tbody.parentNode.replaceChild(new_tbody,old_tbody)
+        new_tbody.id = 'tableBody'
+    }
+
+    clearTable()
     employees.forEach(emp => {
+        
+        // let tableBody = document.createElement('tbody')
+
+       
         let row = document.createElement('tr')
         Object.values(emp).forEach(text => {
             let cell = document.createElement('td')
@@ -80,10 +95,12 @@ addForm.addEventListener('submit', (e) => {
             cell.appendChild(textNode)
             row.appendChild(cell)
         })
+        
         tableBody.appendChild(row)
         
     })
-    empTable.appendChild(tableBody)
+    
+    
     
     // RESET THE FORM
 
@@ -104,11 +121,23 @@ empTable.addEventListener('click', (e) => {
 });
 
 // BUILD THE EMPLOYEES GRID
-function buildGrid() {
+// function buildGrid() {
     // REMOVE THE EXISTING SET OF ROWS BY REMOVING THE ENTIRE TBODY SECTION
-
+    
     // REBUILD THE TBODY FROM SCRATCH
-
+    // employees.forEach(emp => {
+    //     // document.getElementById(tableBody).remove()
+    //     let row = document.createElement('tr')
+    //     Object.values(emp).forEach(text => {
+    //         let cell = document.createElement('td')
+    //         let textNode = document.createTextNode(text)
+    //         cell.appendChild(textNode)
+    //         row.appendChild(cell)
+    //     })
+        
+    //     tableBody.appendChild(row)
+        
+    // })
     // LOOP THROUGH THE ARRAY OF EMPLOYEES
     // REBUILDING THE ROW STRUCTURE
 
@@ -118,4 +147,4 @@ function buildGrid() {
 
     // STORE THE ARRAY IN STORAGE
 
-};
+// };
