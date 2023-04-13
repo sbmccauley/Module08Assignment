@@ -1,6 +1,5 @@
 // CREATE AN ARRAY OF EMPLOYEES
 let emp
-let storage
 let list
 
 
@@ -14,21 +13,28 @@ let employees = [
 ]
 
 // CHECK TO SEE IF STORAGE OBJECT EXISTS WHEN THE PAGE LOADS
-const displayEmployeeList = () => {
-    if (employees.length === 0) {
-        storage = localStorage.getItem('employees') || ''
-        if (storage.length > 0) {
-            employees = storage.split('|')
-        }
-    }
-    if (employees.length > 0) {
-        employees.sort()
-        list = employees.join('\n')
 
-        $('empTable').value = list
-    }
+
+function checkForStorage(){
+    // if (employees.length === 0) {
+    //     updatedEmployees = localStorage.getItem('employees') || ''
+    //     if (updatedEmployees.length > 0) {
+    //         const list = JSON.parse(updatedEmployees)
+    //         console.log(list)
+    //         console.log(updateEmployees)
+    //         list = employees
+    //     }
+    // }
+
+   
+    // if (employees.length > 0) {
+    //     employees.sort()
+    //     list = employees.join('\n')
+
+    //     $('empTable').value = list
+    // }
 }
-
+checkForStorage()
 
         
 // IF DOES, RETURN STORAGE OBJECT INTO ARRAY INSTEAD OF POPULATED ARRAY
@@ -48,21 +54,15 @@ employees.forEach(emp => {
         let textNode = document.createTextNode(text)
         cell.appendChild(textNode)
         row.appendChild(cell)
-
-        
-        
-        
     })
-    
-
+  
     addDeleteButtonToRow(row)   
     tableBody.appendChild(row)
-    
-        
-        
-    
+ 
 })
-    employeeCount()
+employeeCount()
+
+
 // ADD EMPLOYEE
 addForm.addEventListener('submit', (e) => {
     // PREVENT FORM SUBMISSION
@@ -80,73 +80,59 @@ addForm.addEventListener('submit', (e) => {
     
     // PUSH THE NEW ARRAY TO THE *EXISTING* EMPLOYEES ARRAY
    
-        employees.push(newEmployee)
+    employees.push(newEmployee)
         
-        
-  buildGrid() 
-    console.log(employees)
-    console.log(newEmployee)
-    employeeCount()
+  // BUILD THE GRID       
+buildGrid() 
+console.log(employees)
+console.log(newEmployee)
+
+// INCREMENENT THE NUMBER OF EMPLOYEES IN THE TABLE
+employeeCount()
+addToStorage(employees)
 })  
     
-    // BUILD THE GRID
+   
 function buildGrid() {
-    
-
+ 
     clearTable()
-
-    
-     employees.forEach(addEmployee) ;
-        
-    
+    employees.forEach(addEmployee) ;
     
      // RESET THE FORM
     addForm.reset()
    
-    // SET FOCUS BACK TO THE ID TEXT BOX
-    document.getElementById('id').focus()
     
-    // INCREMENENT THE NUMBER OF EMPLOYEES IN THE TABLE
-    
-    // SET FOCUS BACK TO THE ID TEXT BOX}
-
 }
 
 
-    function addEmployee(emp) {
-        let row = document.createElement('tr')
-        Object.values(emp).forEach(text => {
-            let cell = document.createElement('td')
-            let textNode = document.createTextNode(text)
-            cell.appendChild(textNode)
-            row.appendChild(cell)
-        
-        })
-        addDeleteButtonToRow(row)
-        tableBody.appendChild(row)
-        
-    }
-    function addDeleteButtonToRow(rowDelete) {
-        //let rowDelete = document.createElement('tr')
-        let deletecell = document.createElement('td')
-        let deleteBtn = document.createElement('button')
-        deleteBtn.className = 'btn btn-danger btn-sm float-right delete'
-        deleteBtn.appendChild(document.createTextNode('X'))
-        deletecell.appendChild(deleteBtn)
-        rowDelete.appendChild(deletecell)
-    }  
-     
+function addEmployee(emp) {
+    let row = document.createElement('tr')
+    Object.values(emp).forEach(text => {
+        let cell = document.createElement('td')
+        let textNode = document.createTextNode(text)
+        cell.appendChild(textNode)
+        row.appendChild(cell)
     
+    })
+    addDeleteButtonToRow(row)
+    tableBody.appendChild(row)
     
-   
- 
-    
-
+}
+function addDeleteButtonToRow(rowDelete) {
+    //let rowDelete = document.createElement('tr')
+    let deletecell = document.createElement('td')
+    let deleteBtn = document.createElement('button')
+    deleteBtn.className = 'btn btn-danger btn-sm float-right delete'
+    deleteBtn.appendChild(document.createTextNode('X'))
+    deletecell.appendChild(deleteBtn)
+    rowDelete.appendChild(deletecell)
+}  
+  
 function clearTable() {
-    const old_tbody = document.getElementById('tableBody')
-    const new_tbody = document.createElement('tbody')
-    old_tbody.parentNode.replaceChild(new_tbody,old_tbody)
-    new_tbody.id = 'tableBody'
+const old_tbody = document.getElementById('tableBody')
+const new_tbody = document.createElement('tbody')
+old_tbody.parentNode.replaceChild(new_tbody,old_tbody)
+new_tbody.id = 'tableBody'
 }
 
 
@@ -155,42 +141,29 @@ empTable.addEventListener('click', (e) => {
     // CONFIRM THE DELETE
     
         e.preventDefault() 
-        if (confirm(`Are you sure you want to delete ${e.target.parentElement.parentElement.cells[1].innerText}?`)) {
+        if (confirm(`Are you sure you want to delete ${e.target.parentElement.parentElement.cells[1].innerText}?`)) {    // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
+            // REMOVE EMPLOYEE FROM ARRAY            
             empTable.deleteRow(e.target.parentElement.parentElement.rowIndex)
             alert(`${e.target.parentElement.parentElement.cells[1].innerText} has been successfully deleted.`)
             employeeCount()
         }
-    
            
-      employeeCount()
-    
-    
-//         // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
+        // SET FOCUS BACK TO THE ID TEXT BOX
+    document.getElementById('id').focus()
 
-//         // REMOVE EMPLOYEE FROM ARRAY
-
-//         // BUILD THE GRID
-
+     // STORE THE ARRAY IN STORAGE
+     addToStorage()
 });
+
+
 function employeeCount() {
     let numberOfRecords = (empTable.tBodies[0].rows.length) 
     console.log(`The total number or records is: ${numberOfRecords}.`)
     document.querySelector('#empCount').value =  `(${numberOfRecords})`
   
 }
-// BUILD THE EMPLOYEES GRID
-// function buildGrid() {
-    // REMOVE THE EXISTING SET OF ROWS BY REMOVING THE ENTIRE TBODY SECTION
-    
-    // REBUILD THE TBODY FROM SCRATCH
-   
-    // LOOP THROUGH THE ARRAY OF EMPLOYEES
-    // REBUILDING THE ROW STRUCTURE
-
-    // BIND THE TBODY TO THE EMPLOYEE TABLE
-
-    // UPDATE EMPLOYEE COUNT
-
-    // STORE THE ARRAY IN STORAGE
-
-// };
+ 
+function addToStorage(employees) {
+    const updatedEmployees = JSON.stringify(employees);
+    localStorage.setItem('employees', updatedEmployees)
+}
