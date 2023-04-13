@@ -12,6 +12,8 @@ let employees = [
     {'id':65498712, 'fullName':'Bob McCauley', 'extension':4568, 'email':'bobmccauley@gmail.com', 'department':'Administrative'}
 ]
 
+
+
 // CHECK TO SEE IF STORAGE OBJECT EXISTS WHEN THE PAGE LOADS
 const displayEmployeeList = () => {
     if (employees.length === 0) {
@@ -28,6 +30,8 @@ const displayEmployeeList = () => {
     }
 }
 
+
+        
 // IF DOES, RETURN STORAGE OBJECT INTO ARRAY INSTEAD OF POPULATED ARRAY
 
 
@@ -45,11 +49,21 @@ employees.forEach(emp => {
         let textNode = document.createTextNode(text)
         cell.appendChild(textNode)
         row.appendChild(cell)
+
+        
+        
+        
     })
+    
+
+    addDeleteButtonToRow(row)   
     tableBody.appendChild(row)
     
+        
+        
+    
 })
-// empTable.appendChild(tableBody)
+
 // ADD EMPLOYEE
 addForm.addEventListener('submit', (e) => {
     // PREVENT FORM SUBMISSION
@@ -63,50 +77,76 @@ addForm.addEventListener('submit', (e) => {
     newEmployee['extension'] = document.getElementById('extension').value;
     newEmployee['email'] = document.getElementById('email').value;
     newEmployee['department'] = document.getElementById('department').value;
+    newEmployee['delete'] = 'X'
     
     // PUSH THE NEW ARRAY TO THE *EXISTING* EMPLOYEES ARRAY
    
         employees.push(newEmployee)
         
-   
+  buildGrid() 
     console.log(employees)
     console.log(newEmployee)
-   
+})  
     
     // BUILD THE GRID
-
-    function clearTable() {
-        const old_tbody = document.getElementById('tableBody')
-        const new_tbody = document.createElement('tbody')
-        old_tbody.parentNode.replaceChild(new_tbody,old_tbody)
-        new_tbody.id = 'tableBody'
-    }
+function buildGrid() {
+    
 
     clearTable()
-    employees.forEach(emp => {
-        
-        // let tableBody = document.createElement('tbody')
 
-       
+    
+     employees.forEach(addEmployee) ;
+        
+    
+    addDeleteButtonToRow()
+     // RESET THE FORM
+    addForm.reset()
+   
+    // SET FOCUS BACK TO THE ID TEXT BOX
+    document.getElementById('id').focus()
+    
+    // INCREMENENT THE NUMBER OF EMPLOYEES IN THE TABLE
+    // employeeCount() 
+
+    // SET FOCUS BACK TO THE ID TEXT BOX}
+}
+
+
+    function addEmployee(emp) {
         let row = document.createElement('tr')
         Object.values(emp).forEach(text => {
             let cell = document.createElement('td')
             let textNode = document.createTextNode(text)
             cell.appendChild(textNode)
             row.appendChild(cell)
+        
         })
         
         tableBody.appendChild(row)
         
-    })
+    }
+    function addDeleteButtonToRow(row) {
+        
+        let deletecell = document.createElement('td')
+        let deleteBtn = document.createElement('button')
+        deleteBtn.className = 'btn btn-danger btn-sm float-right delete'
+        deleteBtn.appendChild(document.createTextNode('X'))
+        deletecell.appendChild(deleteBtn)
+        row.appendChild(deletecell)
+    }  
+     
     
     
+   
+ 
     
-    // RESET THE FORM
 
-    // SET FOCUS BACK TO THE ID TEXT BOX
-
-});
+function clearTable() {
+    const old_tbody = document.getElementById('tableBody')
+    const new_tbody = document.createElement('tbody')
+    old_tbody.parentNode.replaceChild(new_tbody,old_tbody)
+    new_tbody.id = 'tableBody'
+}
 
 // DELETE EMPLOYEE
 empTable.addEventListener('click', (e) => {
@@ -125,19 +165,7 @@ empTable.addEventListener('click', (e) => {
     // REMOVE THE EXISTING SET OF ROWS BY REMOVING THE ENTIRE TBODY SECTION
     
     // REBUILD THE TBODY FROM SCRATCH
-    // employees.forEach(emp => {
-    //     // document.getElementById(tableBody).remove()
-    //     let row = document.createElement('tr')
-    //     Object.values(emp).forEach(text => {
-    //         let cell = document.createElement('td')
-    //         let textNode = document.createTextNode(text)
-    //         cell.appendChild(textNode)
-    //         row.appendChild(cell)
-    //     })
-        
-    //     tableBody.appendChild(row)
-        
-    // })
+   
     // LOOP THROUGH THE ARRAY OF EMPLOYEES
     // REBUILDING THE ROW STRUCTURE
 
