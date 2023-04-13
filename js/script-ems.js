@@ -142,17 +142,20 @@ empTable.addEventListener('click', (e) => {
     
         e.preventDefault() 
         if (confirm(`Are you sure you want to delete ${e.target.parentElement.parentElement.cells[1].innerText}?`)) {    // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
-            // REMOVE EMPLOYEE FROM ARRAY            
+            // REMOVE EMPLOYEE FROM ARRAY
+            employees.splice(e.target.parentElement.parentElement.rowIndex)          
             empTable.deleteRow(e.target.parentElement.parentElement.rowIndex)
+           
             alert(`${e.target.parentElement.parentElement.cells[1].innerText} has been successfully deleted.`)
             employeeCount()
+            addToStorage(employees)
         }
            
         // SET FOCUS BACK TO THE ID TEXT BOX
     document.getElementById('id').focus()
 
      // STORE THE ARRAY IN STORAGE
-     addToStorage()
+     
 });
 
 
