@@ -63,7 +63,7 @@ employees.forEach(emp => {
         
     
 })
-
+    employeeCount()
 // ADD EMPLOYEE
 addForm.addEventListener('submit', (e) => {
     // PREVENT FORM SUBMISSION
@@ -77,15 +77,17 @@ addForm.addEventListener('submit', (e) => {
     newEmployee['extension'] = document.getElementById('extension').value;
     newEmployee['email'] = document.getElementById('email').value;
     newEmployee['department'] = document.getElementById('department').value;
-    newEmployee['delete'] = 'X'
+    
     
     // PUSH THE NEW ARRAY TO THE *EXISTING* EMPLOYEES ARRAY
    
         employees.push(newEmployee)
         
+        
   buildGrid() 
     console.log(employees)
     console.log(newEmployee)
+    employeeCount()
 })  
     
     // BUILD THE GRID
@@ -98,7 +100,7 @@ function buildGrid() {
      employees.forEach(addEmployee) ;
         
     
-    addDeleteButtonToRow()
+    
      // RESET THE FORM
     addForm.reset()
    
@@ -121,18 +123,18 @@ function buildGrid() {
             row.appendChild(cell)
         
         })
-        
+        addDeleteButtonToRow(row)
         tableBody.appendChild(row)
         
     }
-    function addDeleteButtonToRow(row) {
-        
+    function addDeleteButtonToRow(rowDelete) {
+        //let rowDelete = document.createElement('tr')
         let deletecell = document.createElement('td')
         let deleteBtn = document.createElement('button')
         deleteBtn.className = 'btn btn-danger btn-sm float-right delete'
         deleteBtn.appendChild(document.createTextNode('X'))
         deletecell.appendChild(deleteBtn)
-        row.appendChild(deletecell)
+        rowDelete.appendChild(deletecell)
     }  
      
     
@@ -148,18 +150,35 @@ function clearTable() {
     new_tbody.id = 'tableBody'
 }
 
+
 // DELETE EMPLOYEE
 empTable.addEventListener('click', (e) => {
     // CONFIRM THE DELETE
+    
+        e.preventDefault() 
+        if (confirm(`Are you sure you want to delete ${e.target.parentElement.parentElement.cells[1].innerText}?`)) {
+            empTable.deleteRow(e.target.parentElement.parentElement.rowIndex)
+            alert(`${e.target.parentElement.parentElement.cells[1].innerText} has been successfully deleted.`)
+            employeeCount()
+        }
+    
+           
+      employeeCount()
+    
+    
+//         // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
 
-        // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
+//         // REMOVE EMPLOYEE FROM ARRAY
 
-        // REMOVE EMPLOYEE FROM ARRAY
-
-        // BUILD THE GRID
+//         // BUILD THE GRID
 
 });
-
+function employeeCount() {
+    let numberOfRecords = (empTable.tBodies[0].rows.length) 
+    console.log(`The total number or records is: ${numberOfRecords}.`)
+    document.querySelector('#empCount').value =  `(${numberOfRecords})`
+  
+}
 // BUILD THE EMPLOYEES GRID
 // function buildGrid() {
     // REMOVE THE EXISTING SET OF ROWS BY REMOVING THE ENTIRE TBODY SECTION
