@@ -4,13 +4,6 @@ let storage
 let list
 
 
-// let employees = [
-//     {'id': 12345678,'fullName': 'Hamish McCauley', 'extension':4567, 'email': 'hmccauley@gmail.com', 'department':'Quality Assurance'},
-//     {'id':45678945, 'fullName':'Steve McCauley','extension': 7894, 'email':'smccauley@verimatrix.com','department': 'Marketing'},
-//     {'id':78945612, 'fullName': 'Sheri McCauley','extension': 8965, 'email':'sbmccauley@gmail.com', 'department':'Executive'},
-//     {'id':12345879,'fullName': 'Max McCauley','extension': 7412,'email': 'mgmccauley@gmail.com','department': 'Sales'},
-//     {'id':65498712, 'fullName':'Bob McCauley', 'extension':4568, 'email':'bobmccauley@gmail.com', 'department':'Administrative'}
-// ]
 
 let employees = [
     [12345678,'Hamish McCauley', 4567, 'hmccauley@gmail.com', 'Quality Assurance'],
