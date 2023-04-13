@@ -1,6 +1,5 @@
 // CREATE AN ARRAY OF EMPLOYEES
 let emp
-let list
 let updatedEmployees
 
 
@@ -26,9 +25,7 @@ if(updatedEmployees) {
 
 
 // GET DOM ELEMENTS
-const $ = (id) => {
-    return document.getElementById(id)
-}
+
 
 // BUILD THE EMPLOYEES TABLE WHEN THE PAGE LOADS
 
@@ -75,8 +72,7 @@ addForm.addEventListener('submit', (e) => {
         
   // BUILD THE GRID       
 buildGrid() 
-console.log(employees)
-console.log(newEmployee)
+
 
 // INCREMENENT THE NUMBER OF EMPLOYEES IN THE TABLE
 employeeCount()
@@ -88,8 +84,7 @@ function buildGrid() {
  
     clearTable()
     employees.forEach(addEmployee) ;
-    console.log(`this is from the buildGrid${employees}`)
-     // RESET THE FORM
+    // RESET THE FORM
     addForm.reset()
    
     
