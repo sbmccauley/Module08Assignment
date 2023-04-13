@@ -1,7 +1,7 @@
 // CREATE AN ARRAY OF EMPLOYEES
 let emp
 let list
-
+let updatedEmployees
 
 
 let employees = [
@@ -12,29 +12,14 @@ let employees = [
     [65498712,'Bob McCauley',4568,'bobmccauley@gmail.com','Administrative']
 ]
 
-// CHECK TO SEE IF STORAGE OBJECT EXISTS WHEN THE PAGE LOADS
+//CHECK TO SEE IF STORAGE OBJECT EXISTS WHEN THE PAGE LOADS
+updatedEmployees = localStorage.getItem('employees')
+if(updatedEmployees) {
 
-
-function checkForStorage(){
-    // if (employees.length === 0) {
-    //     updatedEmployees = localStorage.getItem('employees') || ''
-    //     if (updatedEmployees.length > 0) {
-    //         const list = JSON.parse(updatedEmployees)
-    //         console.log(list)
-    //         console.log(updateEmployees)
-    //         list = employees
-    //     }
-    // }
-
-   
-    // if (employees.length > 0) {
-    //     employees.sort()
-    //     list = employees.join('\n')
-
-    //     $('empTable').value = list
-    // }
+    employees = JSON.parse(updatedEmployees)
 }
-checkForStorage()
+
+
 
         
 // IF DOES, RETURN STORAGE OBJECT INTO ARRAY INSTEAD OF POPULATED ARRAY
@@ -71,12 +56,18 @@ addForm.addEventListener('submit', (e) => {
    
     // ADD THE NEW EMPLOYEE TO A NEW ARRAY OBJECT
     let newEmployee = []
-    newEmployee['id'] = document.getElementById('id').value;
-    newEmployee['name'] = document.getElementById('name').value;
-    newEmployee['extension'] = document.getElementById('extension').value;
-    newEmployee['email'] = document.getElementById('email').value;
-    newEmployee['department'] = document.getElementById('department').value;
+    // newEmployee['id'] = document.getElementById('id').value;
+    // newEmployee['name'] = document.getElementById('name').value;
+    // newEmployee['extension'] = document.getElementById('extension').value;
+    // newEmployee['email'] = document.getElementById('email').value;
+    // newEmployee['department'] = document.getElementById('department').value;
     
+    let id = document.getElementById('id').value;
+    let name = document.getElementById('name').value;
+    let extension = document.getElementById('extension').value;
+    let email = document.getElementById('email').value;
+    let department = document.getElementById('department').value;
+    newEmployee = [id, name, extension, email, department]
     
     // PUSH THE NEW ARRAY TO THE *EXISTING* EMPLOYEES ARRAY
    
@@ -97,7 +88,7 @@ function buildGrid() {
  
     clearTable()
     employees.forEach(addEmployee) ;
-    
+    console.log(`this is from the buildGrid${employees}`)
      // RESET THE FORM
     addForm.reset()
    
@@ -143,9 +134,9 @@ empTable.addEventListener('click', (e) => {
         e.preventDefault() 
         if (confirm(`Are you sure you want to delete ${e.target.parentElement.parentElement.cells[1].innerText}?`)) {    // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
             // REMOVE EMPLOYEE FROM ARRAY
-            employees.splice(e.target.parentElement.parentElement.rowIndex)          
-            empTable.deleteRow(e.target.parentElement.parentElement.rowIndex)
-           
+            employees.splice(e.target.parentElement.parentElement.rowIndex,1)          
+            //empTable.deleteRow(e.target.parentElement.parentElement.rowIndex)
+           buildGrid()
             alert(`${e.target.parentElement.parentElement.cells[1].innerText} has been successfully deleted.`)
             employeeCount()
             addToStorage(employees)
@@ -165,8 +156,8 @@ function employeeCount() {
     document.querySelector('#empCount').value =  `(${numberOfRecords})`
   
 }
- 
+
 function addToStorage(employees) {
-    const updatedEmployees = JSON.stringify(employees);
+    let updatedEmployees = JSON.stringify(employees);
     localStorage.setItem('employees', updatedEmployees)
 }
