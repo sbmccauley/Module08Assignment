@@ -4,15 +4,21 @@ let storage
 let list
 
 
+// let employees = [
+//     {'id': 12345678,'fullName': 'Hamish McCauley', 'extension':4567, 'email': 'hmccauley@gmail.com', 'department':'Quality Assurance'},
+//     {'id':45678945, 'fullName':'Steve McCauley','extension': 7894, 'email':'smccauley@verimatrix.com','department': 'Marketing'},
+//     {'id':78945612, 'fullName': 'Sheri McCauley','extension': 8965, 'email':'sbmccauley@gmail.com', 'department':'Executive'},
+//     {'id':12345879,'fullName': 'Max McCauley','extension': 7412,'email': 'mgmccauley@gmail.com','department': 'Sales'},
+//     {'id':65498712, 'fullName':'Bob McCauley', 'extension':4568, 'email':'bobmccauley@gmail.com', 'department':'Administrative'}
+// ]
+
 let employees = [
-    {'id': 12345678,'fullName': 'Hamish McCauley', 'extension':4567, 'email': 'hmccauley@gmail.com', 'department':'Quality Assurance'},
-    {'id':45678945, 'fullName':'Steve McCauley','extension': 7894, 'email':'smccauley@verimatrix.com','department': 'Marketing'},
-    {'id':78945612, 'fullName': 'Sheri McCauley','extension': 8965, 'email':'sbmccauley@gmail.com', 'department':'Executive'},
-    {'id':12345879,'fullName': 'Max McCauley','extension': 7412,'email': 'mgmccauley@gmail.com','department': 'Sales'},
-    {'id':65498712, 'fullName':'Bob McCauley', 'extension':4568, 'email':'bobmccauley@gmail.com', 'department':'Administrative'}
+    [12345678,'Hamish McCauley', 4567, 'hmccauley@gmail.com', 'Quality Assurance'],
+    [45678945,'Steve McCauley', 7894, 'smccauley@verimatrix.com', 'Marketing'],
+    [78945612,'Sheri McCauley', 8965,'sbmccauley@gmail.com','Executive'],
+    [12345879,'Max McCauley',7412,'mgmccauley@gmail.com','Sales'],
+    [65498712,'Bob McCauley',4568,'bobmccauley@gmail.com','Administrative']
 ]
-
-
 
 // CHECK TO SEE IF STORAGE OBJECT EXISTS WHEN THE PAGE LOADS
 const displayEmployeeList = () => {
@@ -108,9 +114,9 @@ function buildGrid() {
     document.getElementById('id').focus()
     
     // INCREMENENT THE NUMBER OF EMPLOYEES IN THE TABLE
-    // employeeCount() 
-
+    
     // SET FOCUS BACK TO THE ID TEXT BOX}
+
 }
 
 
