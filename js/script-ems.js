@@ -10,7 +10,7 @@ let employees = [
     [12345879,'Max McCauley',7412,'mgmccauley@gmail.com','Sales'],
     [65498712,'Bob McCauley',4568,'bobmccauley@gmail.com','Administrative']
 ]
-employees.sort()
+
 //CHECK TO SEE IF STORAGE OBJECT EXISTS WHEN THE PAGE LOADS
 updatedEmployees = localStorage.getItem('employees')
 if(updatedEmployees) {
@@ -19,34 +19,10 @@ if(updatedEmployees) {
     employees.sort()
 }
 
-
-
-        
-// IF DOES, RETURN STORAGE OBJECT INTO ARRAY INSTEAD OF POPULATED ARRAY
-
-
-// GET DOM ELEMENTS
-
-
 // BUILD THE EMPLOYEES TABLE WHEN THE PAGE LOADS
+buildGrid()
 
-employees.forEach(emp => {
-    let row = document.createElement('tr')
-    Object.values(emp).forEach(text => {
-        let cell = document.createElement('td')
-        let textNode = document.createTextNode(text)
-        cell.appendChild(textNode)
-        row.appendChild(cell)
-    })
-  
-    addDeleteButtonToRow(row)   
-    tableBody.appendChild(row)
- 
-})
-employeeCount()
-
-
-// ADD EMPLOYEE
+// ADD EMPLOYEE**************************************************
 addForm.addEventListener('submit', (e) => {
     // PREVENT FORM SUBMISSION
     e.preventDefault()
@@ -67,29 +43,52 @@ addForm.addEventListener('submit', (e) => {
     employees.push(newEmployee)
     
         
-  // BUILD THE GRID       
-buildGrid() 
+    // BUILD THE GRID       
+    buildGrid() 
+    // SET FOCUS BACK TO THE ID TEXT BOX
+    document.getElementById('id').focus()
+    // INCREMENENT THE NUMBER OF EMPLOYEES IN THE TABLE
 
-
-// INCREMENENT THE NUMBER OF EMPLOYEES IN THE TABLE
-employeeCount()
-addToStorage(employees)
+    addToStorage(employees)
 })  
+
+// DELETE EMPLOYEE ****************************************************
+empTable.addEventListener('click', (e) => {
+    // CONFIRM THE DELETE
     
-   
+        e.preventDefault() 
+        if (confirm(`Are you sure you want to delete ${e.target.parentElement.parentElement.cells[1].innerText}?`)) {    // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
+            // REMOVE EMPLOYEE FROM ARRAY
+            employees.splice(e.target.parentElement.parentElement.rowIndex,1)
+                   
+           
+           buildGrid()
+            alert(`${e.target.parentElement.parentElement.cells[1].innerText} has been successfully deleted.`)
+            employeeCount()
+            addToStorage(employees)
+        }
+           
+        // SET FOCUS BACK TO THE ID TEXT BOX
+        document.getElementById('id').focus()
+
+     // STORE THE ARRAY IN STORAGE
+     
+});
+
+//FUNCTIONS ***************************************************
+
 function buildGrid() {
     
     clearTable()
     employees.sort()
     employees.forEach(addEmployee)
+    employeeCount()
 
     // RESET THE FORM
     addForm.reset()
    
     
 }
-
-
 function addEmployee(emp) {
     let row = document.createElement('tr')
     Object.values(emp).forEach(text => {
@@ -119,30 +118,6 @@ const new_tbody = document.createElement('tbody')
 old_tbody.parentNode.replaceChild(new_tbody,old_tbody)
 new_tbody.id = 'tableBody'
 }
-
-
-// DELETE EMPLOYEE
-empTable.addEventListener('click', (e) => {
-    // CONFIRM THE DELETE
-    
-        e.preventDefault() 
-        if (confirm(`Are you sure you want to delete ${e.target.parentElement.parentElement.cells[1].innerText}?`)) {    // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
-            // REMOVE EMPLOYEE FROM ARRAY
-            employees.splice(e.target.parentElement.parentElement.rowIndex,1)
-                   
-            //empTable.deleteRow(e.target.parentElement.parentElement.rowIndex)
-           buildGrid()
-            alert(`${e.target.parentElement.parentElement.cells[1].innerText} has been successfully deleted.`)
-            employeeCount()
-            addToStorage(employees)
-        }
-           
-        // SET FOCUS BACK TO THE ID TEXT BOX
-    document.getElementById('id').focus()
-
-     // STORE THE ARRAY IN STORAGE
-     
-});
 
 
 function employeeCount() {
