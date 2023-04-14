@@ -10,12 +10,13 @@ let employees = [
     [12345879,'Max McCauley',7412,'mgmccauley@gmail.com','Sales'],
     [65498712,'Bob McCauley',4568,'bobmccauley@gmail.com','Administrative']
 ]
-
+employees.sort()
 //CHECK TO SEE IF STORAGE OBJECT EXISTS WHEN THE PAGE LOADS
 updatedEmployees = localStorage.getItem('employees')
 if(updatedEmployees) {
 
     employees = JSON.parse(updatedEmployees)
+    employees.sort()
 }
 
 
@@ -53,12 +54,7 @@ addForm.addEventListener('submit', (e) => {
    
     // ADD THE NEW EMPLOYEE TO A NEW ARRAY OBJECT
     let newEmployee = []
-    // newEmployee['id'] = document.getElementById('id').value;
-    // newEmployee['name'] = document.getElementById('name').value;
-    // newEmployee['extension'] = document.getElementById('extension').value;
-    // newEmployee['email'] = document.getElementById('email').value;
-    // newEmployee['department'] = document.getElementById('department').value;
-    
+   
     let id = document.getElementById('id').value;
     let name = document.getElementById('name').value;
     let extension = document.getElementById('extension').value;
@@ -69,6 +65,7 @@ addForm.addEventListener('submit', (e) => {
     // PUSH THE NEW ARRAY TO THE *EXISTING* EMPLOYEES ARRAY
    
     employees.push(newEmployee)
+    
         
   // BUILD THE GRID       
 buildGrid() 
@@ -81,9 +78,11 @@ addToStorage(employees)
     
    
 function buildGrid() {
- 
+    
     clearTable()
-    employees.forEach(addEmployee) ;
+    employees.sort()
+    employees.forEach(addEmployee)
+
     // RESET THE FORM
     addForm.reset()
    
@@ -129,7 +128,8 @@ empTable.addEventListener('click', (e) => {
         e.preventDefault() 
         if (confirm(`Are you sure you want to delete ${e.target.parentElement.parentElement.cells[1].innerText}?`)) {    // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
             // REMOVE EMPLOYEE FROM ARRAY
-            employees.splice(e.target.parentElement.parentElement.rowIndex,1)          
+            employees.splice(e.target.parentElement.parentElement.rowIndex,1)
+                   
             //empTable.deleteRow(e.target.parentElement.parentElement.rowIndex)
            buildGrid()
             alert(`${e.target.parentElement.parentElement.cells[1].innerText} has been successfully deleted.`)
